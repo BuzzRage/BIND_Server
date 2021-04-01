@@ -1,4 +1,4 @@
-// zone bx.re12.utt.fr inverse
+// zone bX.re12.utt.fr inverse
 $TTL    604800
 @       IN      SOA     ns.bX.re12.utt.fr. root.bX.re12.utt.fr. (
          2021032201     ; Serial number
