@@ -2,10 +2,10 @@
 // Remplacer par le bon numéro X
 zone "bX.re12.utt.fr" {
 	type master;
-	file "direct.txt";
+	file "db.bX.re12.utt.fr";
 };
 
 zone "X.168.192.in-addr.arpa" IN {
 	type master;
-	file "inverse.txt";
+	file "db.192.168.X";
 };
