@@ -1,0 +1,11 @@
+// named.conf.local
+// Remplacer par le bon numéro X
+zone "bX.re12.utt.fr" {
+	type master;
+	file "direct.txt";
+};
+
+zone "X.168.192.in-addr.arpa" IN {
+	type master;
+	file "inverse.txt";
+};
