@@ -103,7 +103,7 @@ nameserver 192.168.1.1
 Il est désormais possible pour ce client de faire la même requête `dig` sans avoir à spécifier le serveur de nom par lequel passer.
 
 # Test avec un serveur Web
-Le fichier `index.html` présent dans ce repo sert de page web sommaire à placer dans le répertoire `var/wwww/html` d'un serveur web.
+Le fichier `index.html` présent dans ce repo sert de page web sommaire à placer dans le répertoire `/var/wwww/html` d'un serveur web.
 
 Pour ce tutoriel, le plus simple est de lancer la commande suivante:
 ```
