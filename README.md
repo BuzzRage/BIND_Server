@@ -18,12 +18,11 @@ Le sous-domaine `ns.chapeau.tu` désigne l'IP du serveur de nom (NS Record).
 Le sous-domain `turlututu.chapeau.tu` désigne l'IP d'un client (ou d'un service) sous l'autorité du serveur de nom.
 
 # Configuration IP
-L'IP du serveur de nom nommé `ns.chapeau.tu` est définie à `192.168.X.129`. 
+L'IP du serveur de nom nommé `ns.chapeau.tu` est définie à `db.192.168.X.129`. 
 
-L'IP du client (ou du service) nommé `turlututu.chapeau.tu` est définie à `192.168.X.1`.
+L'IP du client (ou du service) nommé `turlututu.chapeau.tu` est définie à `db.192.168.X.1`.
 
 Il faut adapter les IP à votre configuration réseau.
-À noter que les adresses IP des conteneurs Docker prennent en général la forme `172.17.0.X`.
 
 Pour vérifier l'IP d'un conteneur: 
 ```
@@ -35,14 +34,30 @@ Pour le fichier `db.192.168.X.129`, seul le dernier octet de l'IP est indiqué d
 
 # Mise en oeuvre
 
+Voici les étapes pour mettre en route le serveur DNS:
+
+* Clonage du repo:
+```
+git clone https://github.com/BuzzRage/BIND_Server
+```
+* Déplacement dans le répertoire du repo:
+```
+cd ./BIND_Server
+```
+* Si ce n'est pas déjà fait, démarrage du service `docker`:
+```
+sudo systemctl start docker
+```
+* Configuration des IP dans les fichiers du repo. Si aucun conteneur n'est déjà lancé, cette étape n'est pas nécessaire.
+
 Une fois les fichiers configurés pour notre réseau et nos besoins, il faut maintenant construire l'image et lancer le conteneur en ouvrant les ports spécifiques.
 
-Construction de l'image que l'on nommera `dnsd_img`:
+* Construction de l'image que l'on nommera `dnsd_img`:
 ```
 docker built -t dnsd_img .
 ```
 
-Lancement du conteneur `dnsd` en exposant les ports 53 en tcp/udp:
+* Lancement du conteneur `dnsd` en exposant les ports 53 en tcp/udp:
 ```
 docker run -d --name=dnsd --restart always --publish 53:53/udp --publish 53:53/tcp --publish 127.0.0.1:953:953/tcp	dnsd_img
 ```
@@ -68,7 +83,7 @@ Réponse attendue:
 ;turlututu.chapeau.tu.          IN      A
 
 ;; ANSWER SECTION:
-turlututu.chapeau.tu.   604800  IN      A       192.168.X.1
+turlututu.chapeau.tu.   604800  IN      A       192.168.X.129
 
 ;; Query time: 0 msec
 ;; SERVER: 192.168.X.129#53(192.168.X.129)
@@ -87,4 +102,19 @@ nameserver 192.168.1.1
 ```
 Il est désormais possible pour ce client de faire la même requête `dig` sans avoir à spécifier le serveur de nom par lequel passer.
 
+# Test avec un serveur Web
+Le fichier `index.html` présent dans ce repo sert de page web sommaire à placer dans le répertoire `/var/wwww/html` d'un serveur web.
 
+Pour ce tutoriel, le plus simple est de lancer la commande suivante:
+```
+docker run --name webserver -d -p 1664:80 --mount type=bind,source="$(pwd)",target=/var/www/html php:apache
+```
+
+Pour vérifier si tout fonctionne, après avoir configuré le résolveur DNS côté client, on peut ouvrir un navigateur web et aller sur http://turlututu.chapeau.tu
+
+Une autre manière de vérifier est de passer par le programme `wget`:
+```
+wget turlututu.chapeau.tu
+```
+
+Cela va télécharger le fichier `index.html` dans le répertoire courant. 
