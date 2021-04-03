@@ -1,11 +1,9 @@
-// named.conf.local
-// Remplacer par le bon numéro X
-zone "b21.re12.utt.fr" {
+zone "chapeau.tu" {
 	type master;
-	file "db.b21.re12.utt.fr";
+	file "db.chapeau.tu";
 };
 
-zone "21.168.192.in-addr.arpa" IN {
+zone "0.17.172.in-addr.arpa" IN {
 	type master;
 	file "db.192.168.21";
 };

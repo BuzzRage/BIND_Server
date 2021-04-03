@@ -10,5 +10,5 @@ $TTL    604800
 @     IN      NS      ns.chapeau.tu.
 
 ; name servers - A records
-2		IN 	PTR	ns.chapeau.tu.
-3		IN 	PTR	bojack.chapeau.tu.
+ns          IN      A      172.17.0.2
+bojack      IN      A      172.17.0.3
