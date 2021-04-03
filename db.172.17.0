@@ -11,4 +11,4 @@ $TTL    604800
 
 ; name servers - A records
 2		IN 	PTR	ns.chapeau.tu.
-3		IN 	PTR	bojack.chapeau.tu.
+3		IN 	PTR	turlututu.chapeau.tu.
