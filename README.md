@@ -54,7 +54,7 @@ Une fois les fichiers configurés pour notre réseau et nos besoins, il faut mai
 
 * Construction de l'image que l'on nommera `dnsd_img`:
 ```
-docker built -t dnsd_img .
+docker build -t dnsd_img .
 ```
 
 * Lancement du conteneur `dnsd` en exposant les ports 53 en tcp/udp:
